@@ -1,0 +1,140 @@
+// The module 'vscode' contains the VS Code extensibility API
+// Import the module and reference it with the alias vscode in your code below
+import * as vscode from 'vscode';
+import { sfdxorgcreator } from './auth';
+import {exec} from 'child_process';
+
+
+export async function activate(context: vscode.ExtensionContext) {
+	let disposable = vscode.commands.registerCommand('extension.sayHello',async (uri: vscode.Uri, event) => {
+		// The code you place here will be executed every time your command is executed
+		// Display a message box to the user
+		let editor: any = vscode.window.activeTextEditor;
+		// 	let element:any;
+		// let selectionRange:any =
+		//             new vscode.Range(
+		//                 editor.selection.start,
+		//                 editor.selection.end);
+		// 				console.log(selectionRange._start._character);
+		// 				let end_char = selectionRange._end._character;
+		// 				let o = editor?.document.lineAt(editor?.selection.active.line).text.at(end_char);
+		// 				for(var b = selectionRange._start._character ; b < selectionRange._end._character; b++){
+		// 				let m = editor?.document.lineAt(editor?.selection.active.line).text.at(b);							
+		// 				}
+		let selectedText: any;
+		let currentOpenedFilename: any = vscode.window.activeTextEditor?.document.fileName.replace(/^.*[\\\/]/, '').split('.')[0];
+		console.log(currentOpenedFilename);
+		let currentOpenedFilenamex: any = currentOpenedFilename?.includes('-') ? currentOpenedFilename.split('-')[0] : currentOpenedFilename;
+		console.log(currentOpenedFilenamex);
+		if (!editor.selection.isEmpty) {
+			selectedText = editor?.document.getText(editor.selection);
+			console.log(selectedText);
+			let outputString: any = currentOpenedFilename + "." + selectedText;
+			console.log(outputString);
+			exec(`sfdx force:apex:test:run -u niteshorg --tests "${outputString} -r human"
+		`,
+				function (error, stdout, stderr) {
+					let text: any = stdout.split(/(["])/);
+					exec(`${text[2]}`,
+						function (error, stdout, stderr) {
+							console.log('stdout: ' + stdout);
+							console.log('stderr: ' + stderr);
+							if (error !== null) {
+								console.log('exec error: ' + error);
+							}
+						});
+					//    console.log('stdout: ' + stdout);
+					console.log('stderr: ' + stderr);
+					if (error !== null) {
+						console.log('exec error: ' + error);
+					}
+				});
+		} else {
+			// selectionRange = editor.document.lineAt(editor.selection.start.line).range;
+			console.log("plese selete a public method");
+		}
+	});
+		// let f:any= vscode.window.activeTextEditor?.selection.active;
+		// console.log(f._character);
+		// let final = editor?.document.getText().at(f._character-1);
+		// console.log(final);
+		// let m = editor?.document.lineAt(editor?.selection.active.line).text.at(f._character);
+		// let p = editor?.document.lineAt(editor?.selection.active.line).text.charAt(f._character);
+		// console.log(m);
+		// console.log(p);
+		vscode.window.showInformationMessage('Hello World from cq!');
+	// });
+	// let ada = vscode.commands.registerCommand('go.adarsha', (uri: vscode.Uri) => {
+	// 	//The code you place here will be executed every time your command is executed
+	// 	// Display a message box to the user
+	// 	let currentOpenedFilename: any = vscode.window.activeTextEditor?.document.fileName.replace(/^.*[\\\/]/, '').split('.')[0];
+	// 	let currentOpenedFileLineNumber = vscode.window.activeTextEditor?.selection.active.line !== undefined ? vscode.window.activeTextEditor?.selection.active.line + 1 : undefined;
+
+	// 	currentOpenedFilename = currentOpenedFilename?.includes('-') ? currentOpenedFilename.split('-')[0] : currentOpenedFilename;
+	// 	console.log(currentOpenedFileLineNumber);
+	// 	console.log(currentOpenedFilename);
+	// 	exec(`sfdx force:apex:test:run -u niteshorg --tests "${currentOpenedFilename.excitingMethod} -r human"
+	//  `,
+	// 		function (error, stdout, stderr) {
+	// 			console.log('stdout: ' + stdout);
+	// 			console.log('stderr: ' + stderr);
+	// 			if (error !== null) {
+	// 				console.log('exec error: ' + error);
+	// 			}
+	// 		});
+	// 	let outputString: any = currentOpenedFilename + "." + "TestMethodName";
+	// 	console.log(outputString);
+
+	// 	context.subscriptions.push(disposable, ada);
+	// });
+
+
+	let disc = vscode.commands.registerCommand('extension.sayHi',async (uri:vscode.Uri,event) => {
+		// The code you place here will be executed every time your command is executed
+		// Display a message box to the user
+				let editor:any =vscode.window.activeTextEditor;
+			// 	let element:any;
+		    // let selectionRange:any =
+            //             new vscode.Range(
+            //             editor.selection.start,
+            //             editor.selection.end);
+			// 			   console.log(selectionRange._start._character);
+			// 			   let end_char = selectionRange._end._character;
+			// 				let o = editor?.document.lineAt(editor?.selection.active.line).text.at(end_char);
+			// 				for(var b = selectionRange._start._character ; b < selectionRange._end._character; b++){
+			// 				let m = editor?.document.lineAt(editor?.selection.active.line).text.at(b);							
+			// 				}
+			let selectedText:any;
+			let currentOpenedFilename: any = vscode.window.activeTextEditor?.document.fileName.replace(/^.*[\\\/]/, '').split('.')[0];
+			console.log(currentOpenedFilename);
+			let currentOpenedFilenamex:any = currentOpenedFilename?.includes('-') ? currentOpenedFilename.split('-')[0] : currentOpenedFilename;
+		console.log(currentOpenedFilenamex);
+		if (!editor.selection.isEmpty){
+				//  selectedText = editor?.document.getText(editor.selection);
+				// console.log(selectedText);
+				let outputString: any = currentOpenedFilename ;
+		console.log(outputString);
+		 exec(`sfdx force:apex:test:run -u niteshorg -n "${outputString}" -r human`,
+			    function (error, stdout, stderr) {
+				let text:any = stdout.split(/(["])/);
+				exec(`${text[2]}`,
+				function (error, stdout, stderr) {
+					console.log('stdout: ' + stdout);
+					console.log('stderr: ' + stderr);
+					if (error !== null) {
+						console.log('exec error: ' + error);
+					}
+				});	
+				console.log('stderr: ' + stderr);
+				   if (error !== null) {
+					   console.log('exec error: ' + error);
+				   }
+			   });
+			} else {
+				// selectionRange = editor.document.lineAt(editor.selection.start.line).range;
+				console.log("plese selete a public method");
+			}
+	});	
+}
+// this method is called when your extension is deactivated
+export function deactivate(){}

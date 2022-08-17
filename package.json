@@ -1,0 +1,74 @@
+{
+  "name": "cq",
+	"displayName": "cq",
+	"description": "",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.69.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+		"main": "./out/extension.js",
+		"contributes": {
+			"keybindings": [
+				{
+				  "command": "extension.sayHello",
+				  "key": "ctrl+f1",
+				  "mac": "cmd+f1",
+				  "when": "editorTextFocus"
+				}
+			  ],
+			"commands": [
+			  {
+				  "command": "extension.sayHello",
+				  "title": "SFDX  test valdate public method" 
+			  },
+			  {
+				"command": "extension.sayHi",
+				"title": "SFDX  test validate root method" 
+			}
+			],
+			  "menus": {
+				"editor/context": [{
+					"when": "resourceLangId == jsdx && editorTextFocus",
+					"command": "extension.sayHello",
+					"group": "YourGroup@1"
+			  },
+			  {
+				"when": "resourceLangId == jsdx && editorTextFocus",
+				"command": "extension.sayHi",
+				"group": "YourGroup@1"
+		  }]
+			},
+		"languages": [{
+			"id": "jsdx",
+			"extensions": [ ".js", ".ts",".cls" ],
+			"aliases": [ "javascript", "typescript" ]
+		}]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.69.0",
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.1",
+		"@types/node": "16.x",
+		"@typescript-eslint/eslint-plugin": "^5.30.0",
+		"@typescript-eslint/parser": "^5.30.0",
+		"eslint": "^8.18.0",
+		"glob": "^8.0.3",
+		"mocha": "^10.0.0",
+		"typescript": "^4.7.4",
+		"@vscode/test-electron": "^2.1.5"
+	}
+}
